@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@layer utilities {
+
+  /* Ensure right-click context menu and text selection work */
+  * {
+    -webkit-user-select: auto !important;
+    -moz-user-select: auto !important;
+    -ms-user-select: auto !important;
+    user-select: auto !important;
+    pointer-events: auto !important;
+  }
+
+  /* Ensure body and html allow right-click */
+  html,
+  body {
+    -webkit-user-select: auto !important;
+    -moz-user-select: auto !important;
+    -ms-user-select: auto !important;
+    user-select: auto !important;
+    pointer-events: auto !important;
+  }
+}
+
+@layer utilities {
+
+  /* Border beam animation */
+  @keyframes border-beam {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Meteor animation */
+  @keyframes meteor-effect {
+    0% {
+      transform: rotate(215deg) translateX(0);
+      opacity: 1;
+    }
+
+    70% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: rotate(215deg) translateX(-500px);
+      opacity: 0;
+    }
+  }
+
+  .animate-meteor-effect {
+    animation: meteor-effect linear infinite;
+  }
+
+  /* Lightning flash animation */
+  @keyframes lightning-flash {
+
+    0%,
+    90%,
+    100% {
+      opacity: 0;
+    }
+
+    5%,
+    10% {
+      opacity: 1;
+    }
+  }
+
+  .animate-lightning {
+    animation: lightning-flash 4s infinite;
+  }
+
+  /* Random hover animations */
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse-glow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    }
+
+    50% {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.6);
+    }
+  }
+
+  @keyframes shake {
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    25% {
+      transform: translateX(-2px);
+    }
+
+    75% {
+      transform: translateX(2px);
+    }
+  }
+
+  @keyframes wiggle {
+
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+
+    25% {
+      transform: rotate(-3deg);
+    }
+
+    75% {
+      transform: rotate(3deg);
+    }
+  }
+
+  @keyframes color-shift {
+
+    0%,
+    100% {
+      filter: hue-rotate(0deg);
+    }
+
+    50% {
+      filter: hue-rotate(180deg);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-shake {
+    animation: shake 0.5s ease-in-out infinite;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 1s ease-in-out infinite;
+  }
+
+  .animate-color-shift {
+    animation: color-shift 3s ease-in-out infinite;
+  }
+
+  /* Hover-triggered animations */
+  .hover-float:hover {
+    animation: float 0.6s ease-in-out infinite;
+  }
+
+  .hover-glow:hover {
+    animation: pulse-glow 1s ease-in-out infinite;
+  }
+
+  .hover-shake:hover {
+    animation: shake 0.3s ease-in-out infinite;
+  }
+
+  .hover-wiggle:hover {
+    animation: wiggle 0.8s ease-in-out infinite;
+  }
+
+  .hover-color-shift:hover {
+    animation: color-shift 2s ease-in-out infinite;
+  }
+}
