@@ -6,7 +6,6 @@ import { AuthProvider } from './components/Auth/AuthProvider'
 import { GoogleOneTap } from './components/Auth/GoogleOneTap'
 
 import { TopNav } from './components/Navigation/TopNav'
-import { Toaster } from './components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -48,14 +47,9 @@ export default function RootLayout({
         <AuthProvider>
           <GoogleOneTap />
           <TopNav />
-<<<<<<< HEAD
-          {children}
-          <Toaster />
-=======
           <div className="pt-16">
             {children}
           </div>
->>>>>>> a1d85df (typos)
         </AuthProvider>
       </body>
     </html>

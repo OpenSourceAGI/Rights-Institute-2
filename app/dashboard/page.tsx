@@ -3,14 +3,14 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client'
-import { Button } from '@/app/components/ui/button'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/app/components/ui/card'
+} from '@/components/ui/card'
 import {
   Dialog,
   DialogContent,
@@ -18,12 +18,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/app/components/ui/dialog'
-import { Input } from '@/app/components/ui/input'
-import { Label } from '@/app/components/ui/label'
-import { Textarea } from '@/app/components/ui/textarea'
-import { toast } from '@/app/components/ui/use-toast'
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 import { FileText, Plus, Trash2, Edit, LogOut } from 'lucide-react'
+
+
+function toast(config) {
+  throw new Error('Function not implemented.')
+}
+
 
 interface Document {
   id: string
@@ -73,11 +78,6 @@ export default function DashboardPage() {
       }
     } catch (error) {
       console.error('Failed to load documents:', error)
-      toast({
-        title: 'Error',
-        description: 'Failed to load documents',
-        variant: 'destructive',
-      })
     } finally {
       setLoading(false)
     }
