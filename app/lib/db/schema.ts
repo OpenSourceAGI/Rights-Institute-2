@@ -43,12 +43,15 @@ export const accounts = sqliteTable('accounts', {
 });
 
 /**
- * Verification tokens table - for email verification
+ * Verification table - for Better Auth verification (magic links, email verification, etc.)
  */
-export const verificationTokens = sqliteTable('verification_tokens', {
+export const verification = sqliteTable('verification', {
+  id: text('id').primaryKey(),
   identifier: text('identifier').notNull(),
-  token: text('token').notNull().unique(),
+  value: text('value').notNull(),
   expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' }),
+  updatedAt: integer('updated_at', { mode: 'timestamp' }),
 });
 
 /**
@@ -69,5 +72,7 @@ export type Session = typeof sessions.$inferSelect;
 export type NewSession = typeof sessions.$inferInsert;
 export type Account = typeof accounts.$inferSelect;
 export type NewAccount = typeof accounts.$inferInsert;
+export type Verification = typeof verification.$inferSelect;
+export type NewVerification = typeof verification.$inferInsert;
 export type Document = typeof documents.$inferSelect;
 export type NewDocument = typeof documents.$inferInsert;
