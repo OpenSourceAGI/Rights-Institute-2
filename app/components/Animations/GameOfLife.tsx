@@ -25,14 +25,12 @@ const GameOfLife: React.FC<GameOfLifeProps> = ({ opacity = 1.0, blur = 0.1, scro
   const [isPlaying, setIsPlaying] = useState(true);
 
   // Grid properties - now as state variables that update on resize
-  const cellSize = 12;
+  const cellSize = 20; // Increased from 12 to reduce memory usage and improve performance
   const [gridWidth, setGridWidth] = useState(0);
   const [gridHeight, setGridHeight] = useState(0);
 
-  // Prior generation grids for death detection
+  // Prior generation grid for death detection (reduced from 3 to 1 for memory efficiency)
   const [priorGenGrid, setPriorGenGrid] = useState<number[][]>([]);
-  const [prior2ndGenGrid, setPrior2ndGenGrid] = useState<number[][]>([]);
-  const [prior3rdGenGrid, setPrior3rdGenGrid] = useState<number[][]>([]);
 
 
   const matrixToNumber = (m) => Number.parseInt(m.flat().join(''), 2);
@@ -211,7 +209,7 @@ const GameOfLife: React.FC<GameOfLifeProps> = ({ opacity = 1.0, blur = 0.1, scro
       .map(() => Array(currentGridWidth).fill([0, 0, 0]));
 
     // Add some initial patterns to the local grids
-    for (let i = 0; i < 5; i++) { // Increased from 3 to 5 for more activity
+    for (let i = 0; i < 2; i++) { // Reduced from 5 to 2 for lower memory usage
       const result = placeRandomPattern(newCellGrid, newCellColorGrid, currentGridWidth, currentGridHeight);
       newCellGrid = result.grid;
       newCellColorGrid = result.colorGrid;
@@ -360,12 +358,8 @@ const GameOfLife: React.FC<GameOfLifeProps> = ({ opacity = 1.0, blur = 0.1, scro
       });
     }
 
-    // Ensure the universe is not dead
-    if (
-      JSON.stringify(priorGenGrid) === JSON.stringify(newGrid) ||
-      JSON.stringify(prior2ndGenGrid) === JSON.stringify(newGrid) ||
-      JSON.stringify(prior3rdGenGrid) === JSON.stringify(newGrid)
-    ) {
+    // Ensure the universe is not dead (simplified to only check against immediate prior)
+    if (JSON.stringify(priorGenGrid) === JSON.stringify(newGrid)) {
       changeRandomRules();
       const result = placeRandomPattern(newGrid, newColorGrid, gridWidth, gridHeight);
       newGrid = result.grid;
@@ -373,8 +367,6 @@ const GameOfLife: React.FC<GameOfLifeProps> = ({ opacity = 1.0, blur = 0.1, scro
     }
 
     // Save the current grid state for future reference
-    setPrior3rdGenGrid(prior2ndGenGrid);
-    setPrior2ndGenGrid(priorGenGrid);
     setPriorGenGrid(JSON.parse(JSON.stringify(newGrid)));
 
     setCellGrid(newGrid);
@@ -474,15 +466,15 @@ const GameOfLife: React.FC<GameOfLifeProps> = ({ opacity = 1.0, blur = 0.1, scro
     };
   }, [cellGrid, isPlaying, scrollProgress]);
 
-  // Add random patterns more frequently for more activity
+  // Add random patterns occasionally for some activity
   useEffect(() => {
     const patternInterval = setInterval(() => {
-      if (Math.random() > 0.7 && cellGrid.length > 0) { // Increased frequency from 0.8 to 0.7
+      if (Math.random() > 0.85 && cellGrid.length > 0) { // Reduced frequency from 0.7 to 0.85 for lower CPU usage
         const result = placeRandomPattern(cellGrid, cellColorGrid, gridWidth, gridHeight);
         setCellGrid(result.grid);
         setCellColorGrid(result.colorGrid);
       }
-    }, 6000); // Reduced from 8000 to 6000ms for more frequent pattern injection
+    }, 10000); // Increased from 6000 to 10000ms for less frequent pattern injection
 
     return () => clearInterval(patternInterval);
   }, [cellGrid, cellColorGrid, ruleNumber, gridWidth, gridHeight]);
